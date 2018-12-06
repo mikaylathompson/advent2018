@@ -1,4 +1,6 @@
 import string
+import sys
+sys.setrecursionlimit(5000)
 
 def fn1(polymer):
     # Seems like it should be a recursive thing.
@@ -14,11 +16,22 @@ def fn1(polymer):
         return start_len
     return fn1(polymer)
 
-def fn2(inpt):
-    return None
+def fn2(polymer):
+    # First do each letter from the above list, and then use fn1
+    # Keep track of running best.
+
+    best = (None, len(polymer))
+    for letter in string.ascii_lowercase:
+        result = polymer.replace(letter, '').replace(letter.upper(), '')
+        score = fn1(result)
+        if score < best[1]:
+            best = (letter, score)
+
+    return best
 
 if __name__ == '__main__':
     print(fn1("dabAcCaCBAcCcaDA"))
+    print(fn2("dabAcCaCBAcCcaDA"))
 
     with open('day5.txt', 'r') as inpt:
         print(fn1(inpt.read().strip()))
