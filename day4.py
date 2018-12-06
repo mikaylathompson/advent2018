@@ -56,8 +56,18 @@ def fn1(event_stream):
         minute_counts.update(range(event[0].minute - event[3], event[0].minute))
     return minute_counts.most_common(1)[0][0] * sleepiest_guard
 
-def fn2(inpt_lines):
-    return None
+def fn2(event_stream):
+    # Take the second half of the part 1, and make a seperate counter for each guard.
+    # Grab the overall max count and multiply it with the guard that had that count.
+
+    sleep_counts = defaultdict(Counter)
+
+    relevant_events = filter(lambda x: x[2] == 'wake', event_stream)
+    for event in relevant_events:
+        sleep_counts[event[1]].update(range(event[0].minute - event[3], event[0].minute))
+    max_per_guard = {g: c.most_common(1) for g, c in sleep_counts.items()}
+    sleepiest_guard = max(max_per_guard, key=lambda g: max_per_guard[g][0][1])
+    return sleepiest_guard * max_per_guard[sleepiest_guard][0][0]
 
 if __name__ == '__main__':
     with open('day4.txt', 'r') as inpt:
@@ -65,4 +75,4 @@ if __name__ == '__main__':
         # print(fn1(inpt.readlines()))
         print(fn1(event_stream))
         inpt.seek(0)
-        print(fn2(inpt.readlines()))
+        print(fn2(event_stream))
