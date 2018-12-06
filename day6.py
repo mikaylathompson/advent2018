@@ -2,7 +2,12 @@ def distance(p1, p2):
     return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
 
 def closest(target, points):
-    return min(range(len(points)), key=lambda i: distance(target, points[i]))
+    # Need to deal with ties!
+    distances = [distance(target, p) for p in points]
+    best = min(range(len(distances)), key=lambda i: distances[i])
+    if distances.count(best) > 1:
+        return None
+    return best
 
 
 # This isn't quite giving the right answer. Works on the sample, but I got a wrong answer on the real input.
@@ -23,9 +28,10 @@ def fn1(inpt_lines):
     for x in range(min_x, max_x+1):
         for y in range(min_y, max_y+1):
             winner = closest((x, y), points)
-            counts[winner] += 1
-            if x in [min_x, max_x] or y in [min_y, max_y]:
-                ineligible.add(winner)
+            if winner is not None:
+                counts[winner] += 1
+                if x in [min_x, max_x] or y in [min_y, max_y]:
+                    ineligible.add(winner)
     print("Pre correction: ", counts)
     print("Ineligible: ", ineligible)
     for bad in ineligible:
