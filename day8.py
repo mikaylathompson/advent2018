@@ -20,6 +20,21 @@ class Node():
     def sum_metas(self):
         return sum(self.metas) + sum([n.sum_metas() for n in self.children])
 
+    def value(self):
+        if self.n_children == 0:
+            return sum(self.metas)
+        running_sum = 0
+        for m in self.metas:
+            if m == 0:
+                running_sum += 0
+                continue
+            try:
+                running_sum += self.children[m-1].value()
+            except IndexError:
+                running_sum += 0
+        return running_sum
+
+
 # This label stuff is totally unnecessary! It's just to help myself with debugging.
 def get_label():
     return ''.join(random.choice(string.ascii_uppercase) for _ in range(5))
@@ -48,7 +63,9 @@ def fn1(inpt):
     return node.sum_metas()
 
 def fn2(inpt):
-    return None
+    node, pointer = process_recursively(inpt)
+    print(node)
+    return node.value()
 
 if __name__ == "__main__":
     # sample = "2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2".split()
@@ -56,4 +73,5 @@ if __name__ == "__main__":
     # print(fn2(sample))
     with open('day8_2018.txt', 'r') as f:
         print(fn1(f.read().strip().split()))
+        f.seek(0)
         print(fn2(f.read().strip().split()))
