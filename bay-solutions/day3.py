@@ -1,4 +1,3 @@
-
 import re
 
 def solution1(inpt_lines):  
