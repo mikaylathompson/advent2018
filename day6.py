@@ -9,22 +9,22 @@ def closest(target, points):
         return None
     return best
 
+    # 3736 is TOO HIGH
+    # 3612 is TOO LOW
 
-# This isn't quite giving the right answer. Works on the sample, but I got a wrong answer on the real input.
 def fn1(inpt_lines):
     points = [tuple(map(int, line.strip().split(', '))) for line in inpt_lines]
     # first order approx of dealing with infinity:
     # start 10 steps before/after/above/below most extreme points.
     # calculate all areas within this grid, and then knock out of contention any points represented on the edges
 
-    border = 100
+    border = 50
     min_x = min(p[0] for p in points) - border
     max_x = max(p[0] for p in points) + border
     min_y = min(p[1] for p in points) - border
     max_y = max(p[1] for p in points) + border
     counts = [0] * len(points)
     ineligible = set()
-    print(min_x, max_x, min_y, max_y)
     for x in range(min_x, max_x+1):
         for y in range(min_y, max_y+1):
             winner = closest((x, y), points)
