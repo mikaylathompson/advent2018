@@ -70,7 +70,7 @@ def fn2(event_stream):
     return sleepiest_guard * max_per_guard[sleepiest_guard][0][0]
 
 if __name__ == '__main__':
-    with open('day4.txt', 'r') as inpt:
+    with open('../puzzle-input/day4_2018.txt', 'r') as inpt:
         event_stream = process_event_stream(inpt.readlines())
         # print(fn1(inpt.readlines()))
         print(fn1(event_stream))

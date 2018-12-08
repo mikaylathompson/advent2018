@@ -33,7 +33,7 @@ if __name__ == '__main__':
     print(fn1("dabAcCaCBAcCcaDA"))
     print(fn2("dabAcCaCBAcCcaDA"))
 
-    with open('day5.txt', 'r') as inpt:
+    with open('../puzzle-input/day5_2018.txt', 'r') as inpt:
         print(fn1(inpt.read().strip()))
         inpt.seek(0)
         print(fn2(inpt.read().strip()))

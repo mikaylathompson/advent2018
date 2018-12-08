@@ -94,7 +94,7 @@ def fn2(inpt_lines):
     return ''.join(completed.keys()), time+1
 
 if __name__ == '__main__':
-    with open('day7.txt', 'r') as inpt:
+    with open('../puzzle-input/day7_2018.txt', 'r') as inpt:
         print(fn1(inpt.readlines()))
         inpt.seek(0)
         print(fn2(inpt.readlines()))

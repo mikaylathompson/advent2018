@@ -41,7 +41,7 @@ def fn2(inpt_lines):
     return None
 
 if __name__ == '__main__':
-    with open('day3.txt', 'r') as inpt:
+    with open('../puzzle-input/day3_2018.txt', 'r') as inpt:
         print(fn1(inpt.readlines()))
         inpt.seek(0)
         print(fn2(inpt.readlines()))

@@ -15,7 +15,7 @@ def download_input(day, year, cookie_value):
 def download(day, year, cookie_file, output_file):
     cookie_value = cookie_file.read().strip()
     if not output_file:
-        output_file = open(f"day{day}_{year}.txt", 'w')
+        output_file = open(f"./puzzle-input/day{day}_{year}.txt", 'w')
     output_file.write(download_input(day, year, cookie_value))
     output_file.close()
 
