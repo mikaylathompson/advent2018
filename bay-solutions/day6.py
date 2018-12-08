@@ -6,26 +6,24 @@ def printArr(x):
 
 def solution1(inpt_lines): 
 
-  # load points
+  # load points into list of pt tuples [x, y]
   pts = []
   for l in inpt_lines:
     x = int(l.split(',')[0])
     y =  int(l.split(',')[1])
     pts.append([x,y])
 
-  # create big enough grid
-  x_max = max(pts, key=lambda p: p[0])[0]
+  # create big enough grid to fit all points
+  x_max = max(pts, key=lambda p: p[0])[0] # could add arbitrary extra buffer here but no need
   y_max = max(pts, key=lambda p: p[1])[1]
-
   grid = []
   for r in range(0,x_max):
     row = []
     for c in range(0,y_max):
-      row.append([9999,-1])
+      row.append([9999,-1])  # each cell in grid will be a tuple of [distance_to_closest_pt, that_pt_idx]
     grid.append(row)
 
-  # fill in grid with closest point labels 
-  #    (where label == pt index in pts array)
+  # iteratively fill in grid
   for pt_idx, pt in enumerate(pts):
     for r in range(0,x_max):
       for c in range(0, y_max):
@@ -34,8 +32,8 @@ def solution1(inpt_lines):
           grid[r][c][0] = distance
           grid[r][c][1] = pt_idx 
   
-  # create a new 1D array where each cell will get added up to be the total land area of that pt index
-  pt_areas = [0] * len(pts)
+  # create a new results array to store the area-size for each pt_idx
+  pt_areas = [0] * len(pts) # make it same size as pts array
   for r in range(0, x_max):
     for c in range(0, y_max): 
       pt_areas[ grid[r][c][1] ] += 1
@@ -50,9 +48,11 @@ def solution1(inpt_lines):
     infinite_pt_indexes.add(grid[0][c][1])
     infinite_pt_indexes.add(grid[x_max-1][c][1])
 
+  # ignore the infinites!
   for i in infinite_pt_indexes:
     pt_areas[i] = -1
 
+  # return biggest guy left
   return max (pt_areas)
 
 def solution2(inpt_lines):
@@ -69,12 +69,12 @@ def solution2(inpt_lines):
   y_max = max(pts, key=lambda p: p[1])[1]
 
   # this time we initailize the grid with 0's, instead of [distance, pt_idx] tuples
-  # the int at each coord in array will equal the sum of all pt-distances to that coord
+  # the number at each cell of grid will equal the sum of all pt-distances to that cell
   grid = []
   for r in range(0,x_max):
     row = []
     for c in range(0,y_max):
-      row.append(0)
+      row.append(0) # here's where we initiate the cell to 0
     grid.append(row)
 
   # fill in grid with distance from this point (adding on top of existing vals)
@@ -84,12 +84,13 @@ def solution2(inpt_lines):
         distance = abs(pt[0]-r)+abs(pt[1]-c)
         grid[r][c] += distance  
 
-  # count how many squares are safe
+  # iterate across grid again, counting how many squares are safe
   safe_count = 0
   for r in range(0,x_max):
     for c in range(0, y_max):
       if grid[r][c]<10000: safe_count += 1
 
+  # and return!
   return safe_count
 
 
