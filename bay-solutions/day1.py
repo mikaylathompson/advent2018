@@ -32,9 +32,9 @@ def solution2(inpt_lines):
 
 ## Load input data and run our two main functions
 if __name__ == '__main__':
-    with open('../puzzle-input/day1_2018.txt', 'r') as file:
-      inpt_lines = file.read().splitlines()
+  with open('../puzzle-input/day1_2018.txt', 'r') as file:
+    inpt_lines = file.read().splitlines()
 
-    print( solution1(inpt_lines) )
-    print( solution1_alt(inpt_lines) )
-    print( solution2(inpt_lines) )
+  print( solution1(inpt_lines) )
+  print( solution1_alt(inpt_lines) )
+  print( solution2(inpt_lines) )
