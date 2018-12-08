@@ -1,8 +1,10 @@
 # Advent 2018
+[Advent of Code!](https://adventofcode.com/)
+
+This repo is a workspace for playing with Advent coding challenge. It provides a simple wrapper for quickly downloading your test cases, and sub-directories so multiple coders can participate and follow along with each others solutions.
 
 ## Installation and Requirements
 The `requirements.txt` file is only relevant if you're using the download and run scripts in `grab-puzzle-input.py`.
-So far, all of the solutions only use the python stdlib, so no installs necessary.
 
 ## Use of `grab-puzzle-input.py`
 Not super necessary, but it's a slow day at work, so I wrote a little script that downloads the input for you.
