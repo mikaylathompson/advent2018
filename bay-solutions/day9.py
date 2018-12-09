@@ -5,12 +5,7 @@ def printArr(x):
   for i in x:
     print(i)
 
-#462 players; last marble is worth 71938 points
-def solution1(inpt_lines): 
-	tokens = inpt_lines[0].split(' ')
-	player_count = 98# 462 #int(tokens[0])
-	last_marble_score = 146373 #71938 #int(tokens[6])
-
+def solution1(player_count, last_marble): 
 
 	# holds scores
 	players = [0] * player_count
@@ -23,8 +18,12 @@ def solution1(inpt_lines):
 
 	# loop
 	while True:
-		print(player_num+1, circle) #players are zero indexed, but want to match the sample output when i print here
+		#print(player_num+1, circle) #players are zero indexed, but want to match the sample output when i print here
+		
+		# base case, check for exit
+		if marble_num == last_marble: return max(players)
 
+		# otherwise, iterate on
 		marble_num += 1
 		player_num = (player_num + 1) % player_count
 
@@ -34,7 +33,6 @@ def solution1(inpt_lines):
 			score = marble_num + circle[current_position_idx]
 			circle.pop(current_position_idx)
 			players[player_num] += score
-			if score == last_marble_score: return players[player_num]
 			continue;
 
 		# else, normal play
@@ -44,14 +42,13 @@ def solution1(inpt_lines):
 
 
 
-
-def solution2(inpt_lines):
-  return 0
-
 ## Load input data and run our two main functions
 if __name__ == '__main__':
   with open('../puzzle-input/day9_2018.txt', 'r') as file:
     inpt_lines = file.read().splitlines()
 
-  print( solution1(inpt_lines) )
-  print( solution2(inpt_lines) )
+  tokens = inpt_lines[0].split(' ')
+  player_count = 462 #int(tokens[0])
+  last_marble = 71938 #int(tokens[6])	
+  print( solution1(player_count, last_marble) )
+  print( solution1(player_count, last_marble * 100) )
