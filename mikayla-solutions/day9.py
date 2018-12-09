@@ -15,6 +15,8 @@ def fn1(players, last_marble):
         if current_marble == last_marble:
             break
         current_marble += 1
+        if (current_marble % 1000 == 0):
+            print(current_marble)
         if (current_marble % 23 != 0):
             pos = steps_cw(len(current_board), active, 1)
             current_board = current_board[:pos+1] + [current_marble] + current_board[pos+1:]
@@ -42,4 +44,5 @@ if __name__ == '__main__':
         # print(fn1(30, 5807) == 37305)
         print(fn1(416, 71617))
         inpt.seek(0)
+        print(fn1(416, 7161700))
         print(fn2(inpt.readlines()))
