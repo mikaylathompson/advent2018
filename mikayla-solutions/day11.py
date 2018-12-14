@@ -36,6 +36,51 @@ def fn1(sn, dim=300):
             best = (tl, power)
     return best
 
+def fn2(sn, dim=300):
+    filled_grid = {}
+    for pos in [(x, y) for x in range(1, dim+1) for y in range(1, dim+1)]:
+         filled_grid[(pos, 1)] = calc_power(*pos, sn)
+
+    display(filled_grid)
+
+    toplefts = [(x, y) for x in range(1, dim) for y in range(1, dim)]
+
+    best_pos = max(filled_grid.keys(), key=lambda x: filled_grid[x])
+    best = [*best_pos, filled_grid[best_pos]]
+
+    for size in range(2, dim):
+        for z in [2, 3, 5, 7, 11, 13, 17]:
+            if size > z and size % z == 0:
+                factor = size // z
+                sub_toplefts = [(xa, ya) for xa in range(0, size, factor) for ya in range(0, size, factor)]
+                factors = [factor] * len(sub_toplefts)
+                break
+        else:
+            if size < 5:
+                factor = 1
+                sub_toplefts = [(xa, ya) for xa in range(0, size, factor) for ya in range(0, size, factor)]
+                factors = [factor] * len(sub_toplefts)
+            else:
+                sub_toplefts = [(0, 0)] + [(xa, size-1) for xa in range(0, size - 1)] + [(size-1, ya) for ya in range(0, size)]
+                factors = [size] + [1] * (len(sub_toplefts) - 1)
+
+        for tl in toplefts:
+            try:
+                power = sum([filled_grid[((tl[0] + stl[0], tl[1] + stl[1]), factors[i])] for i, stl in enumerate(sub_toplefts)])
+            except KeyError:
+                continue
+            except AssertionError:
+                print([pos for pos in [(tl[0]+xa, tl[1]+ya) for xa in range(0, size, factor) for ya in range(0, size, factor)]])
+                print([filled_grid[(pos, factor)] for pos in [(tl[0]+xa, tl[1]+ya) for xa in range(0, size, factor) for ya in range(0, size, factor)]])
+                print([calc_power(*pos, sn) for pos in components(*tl, size=size)])
+                continue
+            filled_grid[(pos, size)] = power
+            if power > best[2]:
+                best = (tl, size, power)
+        print(f"At size: {size}, best is: {best}")
+    print()
+    return best
+
 ## Load input data and run our two main functions
 if __name__ == '__main__':
     with open('../puzzle-input/day11_2018.txt', 'r') as file:
@@ -60,5 +105,6 @@ if __name__ == '__main__':
     # For grid serial number 18, the largest total square (with a total power of 113) is 16x16 and has a top-left corner of 90,269, so its identifier is 90,269,16.
     # For grid serial number 42, the largest total square (with a total power of 119) is 12x12 and has a top-left corner of 232,251, so its identifier is 232,251,12.
 
-  print(solution1(inpt_lines))
-  print(solution2(inpt_lines))
+    # print(fn2(18) == ((90,269),16, 113))
+    # print(fn2(42) == ((232,251),12, 119))
+    print(fn2(9306, dim=30))
