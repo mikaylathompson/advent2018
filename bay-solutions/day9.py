@@ -51,4 +51,6 @@ if __name__ == '__main__':
   player_count = 462 #int(tokens[0])
   last_marble = 71938 #int(tokens[6])	
   print( solution1(player_count, last_marble) )
-  print( solution1(player_count, last_marble * 100) )
+  print( solution1(player_count, last_marble*2) )
+  print( solution1(player_count, last_marble*5) )
+  print( solution1(player_count, last_marble*10) )
