@@ -9,7 +9,7 @@ def download_input(day, year, cookie_value):
 
 @click.command()
 @click.option('-d', '--day', prompt=True, type=int)
-@click.option('-y', '--year', default=2018, type=int)
+@click.option('-y', '--year', default=2019, type=int)
 @click.option('--cookie-file', default=".cookie", type=click.File('r'))
 @click.option('--output-file', type=click.File('w'))
 def download(day, year, cookie_file, output_file):
@@ -21,7 +21,7 @@ def download(day, year, cookie_file, output_file):
 
 
 
-    
+
 
 if __name__ == '__main__':
     download()
