@@ -12,6 +12,7 @@ def download_input(day, year, cookie_value):
 @click.option('-y', '--year', default=2019, type=int)
 @click.option('--cookie-file', default=".cookie", type=click.File('r'))
 @click.option('--output-file', type=click.File('w'))
+
 def download(day, year, cookie_file, output_file):
     cookie_value = cookie_file.read().strip()
     if not output_file:
